@@ -1,0 +1,10 @@
+
+{
+  "compilerOptions": {
+    "strict": true,
+    "rootDir": "./src",
+    "outDir": "./dest",
+    "strictNullChecks": true,
+    "module": "Node16"
+  }
+}
