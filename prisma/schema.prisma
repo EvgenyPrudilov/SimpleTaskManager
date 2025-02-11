@@ -13,10 +13,60 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// model Users {
+//   id        Int      @id @default(autoincrement())
+//   email     String   @unique
+//   name      String   @unique
+
+//   @@map("users")
+// }
+
 model Users {
   id        Int      @id @default(autoincrement())
+  name      String
   email     String   @unique
-  name      String   @unique
+  token     String   
+  //password  String
+  //createdAt DateTime @default(now())
+  //updatedAt DateTime @updatedAt
+  projects  Projects[] // Проекты, созданные пользователем
+  tasks     Tasks[]    // Задачи, назначенные пользователю
 
   @@map("users")
+}
+
+model Projects {
+  id          Int      @id @default(autoincrement())
+  name       String
+  description String?
+  createdAt   DateTime @default(now())
+  // updatedAt   DateTime @updatedAt
+  creatorId   Int
+  user        Users     @relation(fields: [creatorId], references: [id])
+  tasks       Tasks[]   
+
+  @@map("projects")
+}
+
+model Tasks {
+  id          Int      @id @default(autoincrement())
+  // title       String
+  description String?
+  dueDate     DateTime
+  status      TaskStatus @default(CREATED)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  projectId   Int
+  project     Projects  @relation(fields: [projectId], references: [id])
+  assigneeId  Int?
+  assignee    Users?    @relation(fields: [assigneeId], references: [id])
+  // timeLogs    TimeLog[] // Логи времени выполнения задачи
+
+  @@map("tasks")
+}
+
+enum TaskStatus {
+  CREATED
+  IN_PROGRESS
+  COMPLETED
 }

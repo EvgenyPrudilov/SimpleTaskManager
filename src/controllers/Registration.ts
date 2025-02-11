@@ -4,16 +4,22 @@ import registrationService from '../services/Registration.js';
 
 class RegisterController {
   async registerUser(req: Request, res: Response) {
-    console.dir(req.body);
+    console.log(`POST /registration/`);
     const { name, email } = req.body;
 
     try {
-      const user = await registrationService.registerUser(name, email);
-      res.status(200).json({
-        result: "POST /registration/", name, email
-      })
+      if (await registrationService.isEmailUsed(email)) {
+        res.status(400).json({ message: "Email already in use." });
+      }
     } catch (error) {
-      res.status(500).json({ error: 'Failed to register user' });
+      res.status(500).json({ error: "Failed to check if email is used" });
+    }
+    
+    try {
+      const { access_token, refresh_token } = await registrationService.registerUser(name, email);
+      res.status(200).json({ access_token, refresh_token })
+    } catch (error) {
+      res.status(500).json({ error: "Failed to register user" });
     }
   }
 }

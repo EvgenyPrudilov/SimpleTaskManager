@@ -10,6 +10,12 @@ const dbDefaultName = 'db';
 const serverDefaultHost = 'localhost';
 const serverDefaultPort = '4200';
 
+const jwtDefaultSecret = "N1EKTKDhtSfZIUiP8Mcbp9BxScTEKrAR6wVH5gT3LKw=";
+const jwtDefaultRefreshSecret = "blyKZKWQ+b1FZfduKZEhkweOZ/PuqQus6kqPsHgrF2s=";
+
+const jwtDefaultSecretExpiresIn = "1d";
+const jwtDefaultRefreshSecretExpiresIn = "30d";
+
 readConfigFile();
 
 export const config: Config = {
@@ -21,4 +27,10 @@ export const config: Config = {
 
     serverHost: process.env.SERVER_HOST || serverDefaultHost,
     serverPort: parseInt(process.env.SERVER_PORT || serverDefaultPort, 10),
+
+    jwtSecret: process.env.JWT_SECRET || jwtDefaultSecret,
+    jwtRefreshSecret: process.env.JWT_REFRESH_SECRET || jwtDefaultRefreshSecret,
+
+    jwtSecretExpiresIn: process.env.JWT_SECTER_EXPIRES_IN || jwtDefaultSecretExpiresIn,
+    jwtRefreshSecretExpiresIn: process.env.JWT_REFRESH_SECRET_EXPIRES_IN || jwtDefaultRefreshSecretExpiresIn
 };

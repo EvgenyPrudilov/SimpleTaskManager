@@ -1,11 +1,12 @@
 
 import { Router } from "express";
 import projectController from "../controllers/Projects.js"
+import VerificationMiddleware from "../middleware/Verification.js";
 
 const projectsRouter = Router();
 
 // GET /projects - получение всех проектов 
-projectsRouter.get("/", projectController.getAllProjects);
+projectsRouter.get("/", VerificationMiddleware.verifyAccessToken, projectController.getAllProjects);
 
 // POST /projects - создание проекта
 projectsRouter.post("/", projectController.createProject);

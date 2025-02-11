@@ -17,7 +17,7 @@ class ProjectsController {
     try {
       const projects = await projectService.getAllProjects();
       res.status(200).json({
-        result: "GET /projects/"
+        result: projects
       })
     } catch (error) {
       res.status(500).json({ error: `Failed to get all projects` });
@@ -25,14 +25,17 @@ class ProjectsController {
   }
 
   async createProject(req: Request, res: Response) {
+    const projectSettings = req.body;
     console.log(`POST /projects/`);
 
     try {
-      const project = await projectService.createProject();
+      const project = await projectService.createProject(projectSettings);
+      console.dir(project);
       res.status(200).json({
-        result: "POST /projects/"
+        result: project
       })
     } catch (error) {
+      console.dir(error)
       res.status(500).json({ error: `Failed to create project` });
     }
   }

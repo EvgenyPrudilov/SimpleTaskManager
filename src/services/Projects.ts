@@ -1,18 +1,22 @@
 
 import { PrismaClient } from "@prisma/client";
-import { Project } from "../types/Types.js";
+import { Project, T_ProjectInitParams } from "../types/Types.js";
 
 const prisma = new PrismaClient();
 
 class ProjectsService {
   async getAllProjects() {
     console.log(`ProjectsService.getAllProjects`)
-    // return prisma. ...
+    return prisma.projects.findMany();
   }
 
-  async createProject() {
-    console.log(`ProjectsService.createProjects`)
-    // return prisma. ...
+  async createProject(projectInitParams: T_ProjectInitParams) {
+    const project = prisma.projects.create({
+      data: projectInitParams
+    });
+    console.log(`ProjectsService.createProjects:`);
+
+    return project;
   }
 
   async addTask(project: Project) {

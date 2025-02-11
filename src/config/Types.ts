@@ -7,5 +7,11 @@ export interface Config {
   dbName: string,
 
   serverHost: string,
-  serverPort: number
+  serverPort: number,
+
+  jwtSecret: string,
+  jwtRefreshSecret: string,
+
+  jwtSecretExpiresIn: string,
+  jwtRefreshSecretExpiresIn: string
 }
