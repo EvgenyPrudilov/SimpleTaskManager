@@ -4,9 +4,10 @@ import projectController from "../controllers/Projects.js"
 import VerificationMiddleware from "../middleware/Verification.js";
 
 const projectsRouter = Router();
+projectsRouter.use(VerificationMiddleware.verifyAccessToken)
 
 // GET /projects - получение всех проектов 
-projectsRouter.get("/", VerificationMiddleware.verifyAccessToken, projectController.getAllProjects);
+projectsRouter.get("/", projectController.getAllProjects);
 
 // POST /projects - создание проекта
 projectsRouter.post("/", projectController.createProject);

@@ -1,6 +1,7 @@
 
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import projectService from '../services/Projects.js';
+import { isGetProjectTimingParams, T_GetProjectTimingParams, T_TaskCreateParams } from "../types/Types.js"
 
 const project = {
   id: 1,
@@ -10,6 +11,9 @@ const project = {
 }
 
 class ProjectsController {
+
+  ///////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////
 
   async getAllProjects(req: Request, res: Response) {
     console.log(`GET /projects/`);
@@ -24,12 +28,15 @@ class ProjectsController {
     }
   }
 
+  ///////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////
+
   async createProject(req: Request, res: Response) {
-    const projectSettings = req.body;
+    const projectCreateParams = req.body;
     console.log(`POST /projects/`);
 
     try {
-      const project = await projectService.createProject(projectSettings);
+      const project = await projectService.createProject(projectCreateParams);
       console.dir(project);
       res.status(200).json({
         result: project
@@ -40,37 +47,49 @@ class ProjectsController {
     }
   }
 
+  ///////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////
+
   async addTask(req: Request, res: Response) {
+    const taskCreateParams = req.body;
     console.log(`POST /projects/${ req.params.pid }/tasks`);
 
     try {
-      const task = await projectService.addTask(project);
+      const task = await projectService.addTask(taskCreateParams);
       res.status(200).json({
-        result: `POST /projects/${ req.params.pid }/tasks`
+        result: task
       })
     } catch (error) {
       res.status(500).json({ error: `Failed to add task to project` });
     }
   }
 
+  ///////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////
+
   async getAllTasks(req: Request, res: Response) {
+    const projectId = req.body.id;
     console.log(`GET /projects/${ req.params.pid }/tasks`);
 
     try {
-      const tasks = await projectService.getAllTasks(project);
+      const tasks = await projectService.getAllTasks(projectId);
       res.status(200).json({
-      result: `GET /projects/${ req.params.pid }/tasks`
-    })
+        result: `GET /projects/${ req.params.pid }/tasks`
+      })
     } catch (error) {
       res.status(500).json({ error: `Failed to get all tasks` });
     }
   }
 
+  ///////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////
+
   async setProjectUser(req: Request, res: Response) {
+    const body = req.body;
     console.log(`PATCH /projects/${ req.params.pid }/tasks/${ req.params.tid }/user`);
 
     try {
-      const result = await projectService.setProjectUser("username", project);
+      const result = await projectService.setProjectUser(body);
       res.status(200).json({
         result: `PATCH /projects/${ req.params.pid }/tasks/${ req.params.tid }/user`
       })
@@ -78,6 +97,9 @@ class ProjectsController {
       res.status(500).json({ error: `Failed to set project user` });
     }
   }
+
+  ///////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////
 
   async changeStatus(req: Request, res: Response) {
     console.log(`PATCH /projects/${ req.params.pid }/tasks/${ req.params.tid }/status`);
@@ -92,18 +114,25 @@ class ProjectsController {
     }
   }
 
-  async getProjectTiming(req: Request, res: Response) {
-    const period = req.query.period as string;
-    console.log(`GET /projects/${ req.params.pid }/time?period=${ period }`);
+  ///////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////
 
-    try {
-      const projectTiming = await projectService.getProjectTiming();
-      res.status(200).json({
-        result: `GET /projects/${ req.params.pid }/time?period=${ period }`
-      })
-    } catch (error) {
-      res.status(500).json({ error: `Failed to get project timing` });
-    }
+  async getProjectTiming(req: Request, res: Response, next: NextFunction) {
+    if (isGetProjectTimingParams(req.query)) {
+      const body = req.query;
+      console.log(`GET /projects/${ req.params.pid }/time?period=${ body.period }`);
+
+      try {
+        const projectTiming = await projectService.getProjectTiming(body);
+        res.status(200).json({
+          result: projectTiming
+        })
+      } catch (error) {
+        res.status(500).json({ error: `Failed to get project timing` });
+      }
+    } else {
+      next();
+    } 
   }
 }
 
