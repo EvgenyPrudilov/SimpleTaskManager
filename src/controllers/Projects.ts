@@ -1,7 +1,7 @@
 
 import { NextFunction, Request, Response } from 'express';
 import projectService from '../services/Projects.js';
-import { isGetProjectTimingParams, T_GetProjectTimingParams, T_TaskCreateParams } from "../types/Types.js"
+import { isGetProjectTimingParams } from '../types/ProjectsTypes.js';
 
 const project = {
   id: 1,
@@ -105,7 +105,7 @@ class ProjectsController {
     console.log(`PATCH /projects/${ req.params.pid }/tasks/${ req.params.tid }/status`);
 
     try {
-      const newStatus = await projectService.changeStatus();
+      const newStatus = await projectService.changeStatus(req.body);
       res.status(200).json({
         result: `PATCH /projects/${ req.params.pid }/tasks/${ req.params.tid }/status`
       })
