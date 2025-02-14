@@ -1,7 +1,6 @@
 
 import { PrismaClient } from '@prisma/client';
-import { config } from '../config/Config.js';
-import jwt from 'jsonwebtoken';
+import TokensService from "./Tokens.js"
 
 const prisma = new PrismaClient();
 
@@ -12,23 +11,25 @@ class RegistrationService {
       data: { name, email, token: "empty" }
     });
 
-    const access_token = jwt.sign(
-      { id: user.id }, config.jwtSecret, { expiresIn: "1d" }
-    );
-    const refresh_token = jwt.sign(
-      { id: user.id }, config.jwtRefreshSecret, { expiresIn: "30d" }
-    );
+    const payload = { id: user.id };
+    const { newAccessToken, newRefreshToken } = TokensService.getNewTokens(payload, payload)
+    // const access_token = jwt.sign(
+    //   { id: user.id }, config.jwtSecret, { expiresIn: "1d" }
+    // );
+    // const refresh_token = jwt.sign(
+    //   { id: user.id }, config.jwtRefreshSecret, { expiresIn: "30d" }
+    // );
      
     const updatedUser  = await prisma.users.update({
       where: { id: user.id }, 
-      data: { token: refresh_token }, 
+      data: { token: newRefreshToken }, 
     });
 
     console.log(`users:`);
     console.dir(await prisma.users.findMany());
-    console.log(`last access token: ${ access_token }`)
+    console.log(`last access token: ${ newAccessToken }`)
     
-    return { user: updatedUser, access_token, refresh_token };
+    return { user: updatedUser, newAccessToken, newRefreshToken };
   }
 
   async isEmailUsed(email: string): Promise<any> {

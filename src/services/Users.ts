@@ -1,8 +1,8 @@
 
 import { PrismaClient } from '@prisma/client';
-import { Enum_TimePeriod } from '../types/Types.js';
+import { Enum_TimePeriod } from '../types/SharedTypes.js';
 import { InternalServerError } from '../errors/Errors.js';
-import { T_GetUserProjectsParams, T_GetUserTimingParams } from '../types/UsersTypes.js';
+import { T_GetUserProjectsParams, T_GetUserTimingParams } from '../types/Users.js';
 
 const prisma = new PrismaClient();
 

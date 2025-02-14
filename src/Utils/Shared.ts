@@ -1,4 +1,4 @@
-import { Enum_TimePeriod } from "./types/Types.js";
+import { Enum_TimePeriod } from "../types/SharedTypes.js";
 
 export const periodMap: { [key: string]: Enum_TimePeriod } = {
   week: Enum_TimePeriod.WEEK,

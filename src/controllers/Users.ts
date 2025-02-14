@@ -1,8 +1,8 @@
 
 import { NextFunction, Request, Response } from 'express';
 import usersService from '../services/Users.js';
-import { isGetUserProjectsParams, isGetUserTimingParams } from '../types/UsersTypes.js';
-import { periodMap } from '../Shared.js';
+import { isGetUserProjectsParams, isGetUserTimingParams } from '../types/Users.js';
+import { periodMap } from '../Utils/Shared.js';
 
 class UsersController {
   async getUserProjects(req: Request, res: Response, next: NextFunction) {

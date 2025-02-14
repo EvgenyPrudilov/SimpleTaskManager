@@ -3,7 +3,7 @@
 /*****************************************************************************/
 
 import { TaskStatus } from "@prisma/client";
-import { Enum_TimePeriod } from "./Types.js";
+import { Enum_TimePeriod } from "./SharedTypes.js";
 
 export type T_ProjectCreateParams = {
   name: string,

@@ -16,8 +16,8 @@ class RegisterController {
     }
     
     try {
-      const { access_token, refresh_token } = await registrationService.registerUser(name, email);
-      res.status(200).json({ access_token, refresh_token })
+      const { newAccessToken, newRefreshToken } = await registrationService.registerUser(name, email);
+      res.status(200).json({ newAccessToken, newRefreshToken })
     } catch (error) {
       res.status(500).json({ error: "Failed to register user" });
     }

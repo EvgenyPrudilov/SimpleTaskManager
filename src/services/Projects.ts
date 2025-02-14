@@ -1,8 +1,8 @@
 
 import { PrismaClient, TaskStatus } from "@prisma/client";
 import { InternalServerError } from "../errors/Errors.js";
-import { T_GetProjectTimingParams, T_ProjectCreateParams, T_SetTaskStatusParams, T_SetTaskUserParams, T_TaskCreateParams } from "../types/ProjectsTypes.js";
-import { Enum_TimePeriod } from "../types/Types.js";
+import { T_GetProjectTimingParams, T_ProjectCreateParams, T_SetTaskStatusParams, T_SetTaskUserParams, T_TaskCreateParams } from "../types/Projects.js";
+import { Enum_TimePeriod } from "../types/SharedTypes.js";
 
 const prisma = new PrismaClient();
 

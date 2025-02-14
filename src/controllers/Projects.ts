@@ -1,7 +1,7 @@
 
 import { NextFunction, Request, Response } from 'express';
 import projectService from '../services/Projects.js';
-import { isGetProjectTimingParams } from '../types/ProjectsTypes.js';
+import { isGetProjectTimingParams } from '../types/Projects.js';
 
 const project = {
   id: 1,

@@ -14,6 +14,7 @@ async function main() {
   app.use("/users", usersRouter);
   app.use("/registration", registrationRouter);
   app.use("/projects", projectsRouter);
+  app.use("auth/refresh-token", )
 
   const server = app.listen(config.serverPort, config.serverHost, () => {
     console.log(`Sever started: ${ server.address() }`);
