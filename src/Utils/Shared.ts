@@ -1,3 +1,4 @@
+
 import { Enum_TimePeriod } from "../types/SharedTypes.js";
 
 export const periodMap: { [key: string]: Enum_TimePeriod } = {
