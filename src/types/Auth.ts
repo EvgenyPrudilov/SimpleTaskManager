@@ -2,11 +2,11 @@
 /*****************************************************************************/
 /*****************************************************************************/
 
-export type T_UserRefreshToken = {
+export type T_OldRefreshToken = {
   refreshToken: string
 }
 
-export function isUserRefreshToken(obj: any): obj is T_UserRefreshToken {
+export function isUserRefreshToken(obj: any): obj is T_OldRefreshToken {
   return (
     typeof obj === "object" &&
     typeof obj.refreshToken === "string"
@@ -34,9 +34,6 @@ export function isRefreshTokenObject(obj: any): obj is T_AccessTokenPayload {
 /*****************************************************************************/
 /*****************************************************************************/
 
-/*****************************************************************************/
-/*****************************************************************************/
-
 export type T_RefreshTokensParams = {
   userId: number,
   accessToken: T_AccessTokenPayload,
@@ -51,3 +48,6 @@ export function isRefreshTokensParams(obj: any): obj is T_RefreshTokensParams {
     isRefreshTokenObject(obj.refreshToken)
   );
 }
+
+/*****************************************************************************/
+/*****************************************************************************/

@@ -5,7 +5,7 @@ export enum Enum_TimePeriod {
   EVER
 }
 
-export interface Project {
+export type Project = {
   id: number;
   name: string;
   description: string;

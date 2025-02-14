@@ -1,5 +1,6 @@
+
 import { config as readConfigFile } from "dotenv";
-import { Config } from "./Types.js";
+import { Config } from "../types/Config.js";
 
 const dbDefaultHost = 'localhost';
 const dbDefaultPort = '4200';

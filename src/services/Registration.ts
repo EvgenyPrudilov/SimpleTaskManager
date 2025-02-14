@@ -4,7 +4,6 @@ import TokensService from "./Tokens.js"
 
 const prisma = new PrismaClient();
 
-
 class RegistrationService {
   async registerUser(name: string, email: string) {
     const user = await prisma.users.create({

@@ -25,13 +25,3 @@ async function main() {
 }
 
 main()
-  .catch((e) => {
-    throw e;
-  })
-  .finally(async () => {
-    // console.log(`disconnecting...`)
-    // await prisma.$disconnect();
-    // console.log(`disconnected`)
-  });
-
-//DATABASE_URL="postgresql://postgres:eugene@localhost:5432/db_task_manager?schema=public"

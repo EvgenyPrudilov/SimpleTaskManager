@@ -3,13 +3,6 @@ import { NextFunction, Request, Response } from 'express';
 import projectService from '../services/Projects.js';
 import { isGetProjectTimingParams } from '../types/Projects.js';
 
-const project = {
-  id: 1,
-  name: "name1",
-  description: "description1",
-  user: "user1"
-}
-
 class ProjectsController {
 
   ///////////////////////////////////////////////////////////////////////
